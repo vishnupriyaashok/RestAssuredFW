@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 22.913 s <<< FAILURE! - in TestSuite
+getUserTest(com.qa.gorest.tests.GetUserTest)  Time elapsed: 1.131 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <404>.
+
+	at com.qa.gorest.tests.GetUserTest.getUserTest(GetUserTest.java:36)
+

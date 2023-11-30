@@ -1,47 +1,55 @@
 package com.qa.gorest.tests;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.qa.gorest.base.BaseTest;
 import com.qa.gorest.client.RestClient;
+import com.qa.gorest.constants.ApiHttpStatus;
+
+import io.qameta.allure.Description;
+
 import static org.hamcrest.Matchers.*;
 
 import java.util.HashMap;
 import java.util.Map;
-public class GetUserTest {
+public class GetUserTest extends BaseTest{
 	
-	RestClient restClient;
+	@BeforeMethod
+	public void getUserSetup() {
+		restClient=new RestClient(prop, baseURI);
+	}
 	
-	@Test
+	
+	@Test(enabled=false,description = "this test is in progress")
+	@Description("this test in progress")
 	public void getAllUsersTest() {
-		restClient=new RestClient();
-		restClient.get("/public/v2/users", true)
+		restClient.get(GOREST_ENDPOINT, true,true)
 		 .then()
 		  .assertThat().log().all()
-		   .statusCode(200);
+		   .statusCode(ApiHttpStatus.OK_200.getCode());
+		
 	}
 
 	
-	@Test
-	public void getUserTest() {
-		restClient=new RestClient();
-		restClient.get("/public/v2/users/5714922", true)
-		 .then()
-		  .assertThat().log().all()
-		   .statusCode(200).and()
-		   .body("id",equalTo(5714922));
-	}
+	  @Test public void getUserTest() { 
+		  restClient.get(GOREST_ENDPOINT+"/5716397", true,true) 
+		  .then()
+		   .assertThat().log().all() 
+		    .statusCode(ApiHttpStatus.OK_200.getCode()).and()
+	          .body("id",equalTo(5716397)); }
+	 
 	
 	@Test
 	public void getUserWithQueryParamsTest() {
-		restClient=new RestClient();
-		Map<String,String> queryParamsMap=new HashMap<String,String>();
-		queryParamsMap.put("name", "Gill");
-		queryParamsMap.put("status", "active");
-		
-		restClient.get("/public/v2/users", queryParamsMap,null,false)
-		           .then().log().all()
+		Map<String, Object> queryParamsMap=new HashMap<String,Object>();
+		queryParamsMap.put("name", "Govinda");
+	    queryParamsMap.put("status", "inactive");
+	
+		restClient.get(GOREST_ENDPOINT, queryParamsMap,null,false,true)
+	           .then().log().all()
 		            .assertThat()
-		             .statusCode(200);
+	                  .statusCode(ApiHttpStatus.OK_200.getCode());
 		  
 	
 	
